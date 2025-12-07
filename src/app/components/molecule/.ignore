@@ -1,0 +1,125 @@
+"use client";
+
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import Logo from "../../../../public/logo/NameLogo.png";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "@/lib/firebaseContext";
+import { Menu } from "lucide-react";
+
+export default function NavBar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const forbidRoutes = [
+    "/login",
+    "/sign-up",
+    "/sign-in/factor-one",
+    "/swapshop",
+    "/canvas",
+  ];
+
+  if (forbidRoutes.includes(pathname)) return null;
+
+  // Auth listener
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user);
+    });
+    return () => unsub();
+  }, []);
+
+  async function handleLogout() {
+  // clear Firebase client session
+  await signOut(auth);
+
+  // clear server session cookie
+  await fetch("/api/auth/logout", {
+    method: "POST",
+    credentials: "include",
+  });
+
+  // redirect
+  window.location.href = "/login";
+}
+
+
+  // Common buttons
+  const authButtons = isLoggedIn ? (
+    <button
+      onClick={handleLogout}
+      className="px-6 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition"
+    >
+      Logout
+    </button>
+  ) : (
+    <>
+      <button
+        onClick={() => router.push("/login")}
+        className="px-6 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
+      >
+        Login
+      </button>
+      <button
+        onClick={() => router.push("/sign-up")}
+        className="px-6 py-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition"
+      >
+        Sign Up
+      </button>
+    </>
+  );
+
+  return (
+    <>
+      {/* ─── Desktop ─────────────────────────────────────── */}
+      <nav className="hidden sm:flex fixed top-4 left-12 right-12 z-50 bg-white/80 backdrop-blur-xl shadow-lg rounded-3xl px-6 py-3">
+        <div className="flex justify-between items-center w-full">
+          {/* Logo */}
+          <Image
+            src={Logo}
+            alt="logo"
+            width={120}
+            height={50}
+            className="cursor-pointer"
+            onClick={() => router.push("/")}
+          />
+
+          {/* Auth buttons */}
+          <div className="flex items-center gap-4">{authButtons}</div>
+        </div>
+      </nav>
+
+      {/* ─── Mobile ─────────────────────────────────────── */}
+      <nav className="sm:hidden fixed top-4 left-4 right-4 z-50">
+        <div className="flex justify-between items-center bg-white/80 backdrop-blur-xl shadow-lg rounded-3xl px-4 py-2">
+          <Image
+            src={Logo}
+            alt="logo"
+            width={100}
+            height={40}
+            onClick={() => router.push("/")}
+            className="cursor-pointer"
+          />
+
+          {/* Hamburger */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="p-2 rounded-md hover:bg-gray-100"
+          >
+            <Menu size={24} />
+          </button>
+        </div>
+
+        {/* Drawer */}
+        {mobileOpen && (
+          <div className="mt-2 bg-white/90 backdrop-blur-lg shadow-xl rounded-2xl p-4 space-y-3">
+            {authButtons}
+          </div>
+        )}
+      </nav>
+    </>
+  );
+}
