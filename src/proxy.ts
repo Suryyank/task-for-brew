@@ -5,22 +5,19 @@ import { verifySessionCookie } from "@/utils/verifySession";
 export async function proxy(req: NextRequest) {
   const session = req.cookies.get("session")?.value;
 
-  // call our API instead
   const res = await fetch(`${req.nextUrl.origin}/api/verify-session`, {
     method: "POST",
-    body: JSON.stringify({ session }),
     headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ session }),
   });
 
   const { valid } = await res.json();
 
-  const isLoginPage = req.nextUrl.pathname.startsWith("/login");
-
-  if (!valid && !isLoginPage) {
+  if (!valid && !req.nextUrl.pathname.startsWith("/login")) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  if (valid && isLoginPage) {
+  if (valid && req.nextUrl.pathname.startsWith("/login")) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
