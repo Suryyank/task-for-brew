@@ -37,7 +37,7 @@ export default function LoginPage() {
       });
 
       // 4. Redirect to dashboard
-      window.location.href = "/dashboard";
+      window.location.replace("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
     }

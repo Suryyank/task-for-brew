@@ -20,6 +20,7 @@ export async function POST(request: Request) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     path: "/",
+    domain: process.env.COOKIE_DOMAIN,
   });
 
   return response;
