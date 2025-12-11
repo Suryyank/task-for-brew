@@ -48,7 +48,7 @@ export default function TaskCard({ task, onDataChange }: TaskCardProps) {
     <div
       onClick={() => !editing && setExpanded((prev) => !prev)}
       className={`
-        p-5 rounded-2xl border bg-white shadow-sm hover:shadow-lg
+        p-5 rounded-2xl border-gray-400/10 border bg-white shadow-xl hover:shadow-md
         transition-all duration-300 cursor-pointer group relative
 
         ${

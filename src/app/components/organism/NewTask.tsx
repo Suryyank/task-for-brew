@@ -4,6 +4,10 @@ import { useState } from "react";
 import SelectBox from "../atoms/SelectBox";
 import { createTask } from "@/db/tasks";
 
+import { useContext } from "react";
+import { ModalStateContext } from "@/context/ModalStateContext";
+import { CircleX, Cross, CrossIcon } from "lucide-react";
+
 export type TaskPriority = "low" | "medium" | "high";
 export type TaskStatus = "to_do" | "in_progress" | "done";
 
@@ -27,6 +31,12 @@ export function NewTask() {
     priority: "medium",
     status: "to_do",
   });
+
+  const modelcontext = useContext(ModalStateContext);
+
+  const handleModalState = () => {
+    modelcontext.setModalState(false);
+  };
 
   const [errors, setErrors] = useState<{ title?: string }>({});
   // const [priority, setPriority] = useState<"low" | "medium" | "high">("medium");
@@ -82,7 +92,18 @@ export function NewTask() {
 
   return (
     <form className="max-w-lg mx-auto p-6 bg-white shadow-2xl rounded-xl space-y-5 text-black">
-      <h2 className="text-2xl font-bold">Create New Task</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold">Create New Task</h2>
+        {modelcontext.modalState && (
+          <button onClick={handleModalState}>
+            <CircleX
+              className="text-red-500 hover:text-red-600/40 transition-colors"
+              strokeWidth={3}
+              size={30}
+            />
+          </button>
+        )}
+      </div>
 
       {/* Title */}
       <div>

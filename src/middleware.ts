@@ -1,41 +1,52 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getAuth } from "firebase-admin/auth";
 import "@/db/firebaseAdmin";
+import { getAuth } from "firebase-admin/auth";
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/profile/:path*", "/tasks/:path*"],
+  matcher: [
+    "/", // <-- protect landing page
+    "/login", // <-- allow redirect logic
+    "/dashboard/:path*",
+    //"/profile/:path*",
+    //"/tasks/:path*",
+  ],
   runtime: "nodejs",
 };
 
 export async function middleware(req: NextRequest) {
   const sessionCookie = req.cookies.get("session")?.value;
   const url = req.nextUrl.clone();
+  const path = url.pathname;
 
-  const isLoginPage = url.pathname.startsWith("/login");
+  const isPublic = path === "/login";
+  const isLanding = path === "/"; // you want to protect this
+  const isProtected = path.startsWith("/dashboard");
+  //path.startsWith("/tasks") ||
+  //path.startsWith("/profile");
 
-  // No session → redirect to login
+  // User not logged in
   if (!sessionCookie) {
-    if (!isLoginPage) {
+    if (isProtected) {
       url.pathname = "/login";
       return NextResponse.redirect(url);
     }
     return NextResponse.next();
   }
 
+  // User HAS a session cookie — verify it
   try {
-    // Direct session cookie verification (NO fetch)
     await getAuth().verifySessionCookie(sessionCookie, true);
 
-    // If user tries to access login page while authenticated
-    if (isLoginPage) {
+    // Logged-in users should NOT see login or landing page
+    if (isPublic || isLanding) {
       url.pathname = "/dashboard";
       return NextResponse.redirect(url);
     }
 
     return NextResponse.next();
   } catch (err) {
-    // Invalid cookie → remove it
+    // Invalid or expired session cookie
     const res = NextResponse.redirect(new URL("/login", req.url));
     res.cookies.delete("session");
     return res;

@@ -44,7 +44,7 @@ const TaskList = () => {
     <div className="mt-20 grid">
       {/* HIGH */}
       <div className="mx-10">
-        <h1 className="text-rose-500 font-semibold">Priority - High</h1>
+        <h1 className="text-red-500 font-semibold">High</h1>
         <div className="space-y-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
           {highPriority.map((task) => (
             <TaskCard key={task.id} task={task} onDataChange={refreshTasks} />
@@ -53,9 +53,9 @@ const TaskList = () => {
       </div>
 
       {/* MEDIUM */}
-      <div>
-        <h1 className="text-amber-500 font-semibold">Priority - Medium</h1>
-        <div className="space-y-2">
+      <div className="mx-10">
+        <h1 className="text-yellow-400 font-semibold">Medium</h1>
+        <div className="space-y-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
           {mediumPriority.map((task) => (
             <TaskCard key={task.id} task={task} onDataChange={refreshTasks} />
           ))}
@@ -63,9 +63,9 @@ const TaskList = () => {
       </div>
 
       {/* LOW */}
-      <div>
-        <h1 className="text-emerald-500 font-semibold">Priority - Low</h1>
-        <div className="space-y-2">
+      <div className="mx-10">
+        <h1 className="text-green-500 font-semibold">Low</h1>
+        <div className="space-y-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
           {lowPriority.map((task) => (
             <TaskCard key={task.id} task={task} onDataChange={refreshTasks} />
           ))}
