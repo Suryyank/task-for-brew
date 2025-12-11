@@ -5,7 +5,9 @@ console.log("ADMIN INIT FILE LOADED");
 if (!getApps().length) {
   console.log("INITIALIZING ADMIN SDK...");
 
-  const raw = process.env.FIREBASE_PRIVATE_KEY;
+  const raw = process.env.FIREBASE_PRIVATE_KEY
+    ? Buffer.from(process.env.FIREBASE_PRIVATE_KEY).toString()
+    : undefined;
   console.log("RAW KEY PRESENT:", !!raw);
 
   const cleaned = raw?.replace(/\\n/g, "\n").replace(/\\\\n/g, "\n").trim();
