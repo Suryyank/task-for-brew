@@ -1,12 +1,12 @@
 import { initializeApp, cert, getApps } from "firebase-admin/app";
 
 if (!getApps().length) {
-  const privateKey = process.env
-    .FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n")
-    .replace(/\\\\n/g, "\n")
-    .trim();
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+  // .FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n")
+  // .replace(/\\\\n/g, "\n")
+  // .trim();
 
-  console.log("Private key length:", privateKey.length);
+  //console.log("Private key length:", privateKey.length);
 
   initializeApp({
     credential: cert({
