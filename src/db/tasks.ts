@@ -1,4 +1,4 @@
-import { db, auth } from "@/lib/firebaseContext";
+import { db, auth } from "@/db/firebaseContext";
 import {
   collection,
   addDoc,

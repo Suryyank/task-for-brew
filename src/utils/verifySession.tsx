@@ -1,5 +1,5 @@
 import { getAuth } from "firebase-admin/auth";
-import { initAdmin } from "@/lib/firebaseAdmin";
+import { initAdmin } from "@/db/firebaseAdmin";
 
 initAdmin();
 

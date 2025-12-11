@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import TaskCard from "./molecule/TaskCard";
-import { getTasksForUser } from "@/lib/tasks";
+import { getTasksForUser } from "@/db/tasks";
 import { TaskDoc } from "./organism/NewTask";
-import { auth } from "@/lib/firebaseContext";
+import { auth } from "@/db/firebaseContext";
 import { onAuthStateChanged } from "firebase/auth";
 
 const TaskList = () => {

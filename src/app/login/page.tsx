@@ -3,7 +3,7 @@ import loginbg from "../../../public/loginpagebg/loginbg.jpg";
 import { useState } from "react";
 import Image from "next/image";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebaseContext";
+import { auth } from "@/db/firebaseContext";
 
 export default function LoginPage() {
   const [form, setForm] = useState({
@@ -14,21 +14,20 @@ export default function LoginPage() {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
+
+  //////////////////////////////////////////////////////////////
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     try {
-      // 1. Firebase login
       const result = await signInWithEmailAndPassword(
         auth,
         form.email,
         form.password
       );
 
-      // 2. Get ID token
       const idToken = await result.user.getIdToken();
 
-      // 3. Create session cookie via your API route
       await fetch("/api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -37,14 +36,12 @@ export default function LoginPage() {
       });
 
       // 4. Redirect to dashboard
-      window.location.replace("/dashboard");
+      window.location.href = "/dashboard";
     } catch (error) {
       console.error("Login failed:", error);
     }
   }
-
-  // TODO:
-  // await fetch("/api/login", { method: "POST", body: JSON.stringify(form) });
+  ///////////////////////////////
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">

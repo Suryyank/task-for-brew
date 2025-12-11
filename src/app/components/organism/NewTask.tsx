@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import SelectBox from "../atoms/SelectBox";
-import { createTask } from "@/lib/tasks";
+import { createTask } from "@/db/tasks";
 
 export type TaskPriority = "low" | "medium" | "high";
 export type TaskStatus = "to_do" | "in_progress" | "done";

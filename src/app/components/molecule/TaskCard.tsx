@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Pencil, Trash2, X, Check } from "lucide-react";
 import { TaskDoc } from "../organism/NewTask";
-import { updateTask, deleteTask } from "@/lib/tasks";
+import { updateTask, deleteTask } from "@/db/tasks";
 
 const priorityStyles: Record<TaskDoc["priority"], string> = {
   low: "bg-emerald-100 text-emerald-700 border-emerald-200",

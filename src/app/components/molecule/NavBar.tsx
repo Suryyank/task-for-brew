@@ -6,7 +6,7 @@ import Logo from "../../../../public/logo/NameLogo.png";
 import React, { useEffect, useState } from "react";
 import CustomButton from "@/app/components/atoms/CustomButton";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "@/lib/firebaseContext";
+import { auth } from "@/db/firebaseContext";
 
 const NavBar = () => {
   const router = useRouter();

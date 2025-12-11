@@ -6,7 +6,7 @@ import signupimg from "../../../public/signupbg/signupimg.jpg";
 import { useRouter } from "next/router";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebaseContext";
+import { auth } from "@/db/firebaseContext";
 
 export default function SignUpPage() {
   const [form, setForm] = useState({
