@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { FirebaseProvider } from "@/db/firebaseContext";
-import NavBar from "./components/molecule/NavBar";
 import { ModalStateProvider } from "@/context/ModalStateContext";
 
 const geistSans = Geist({
@@ -33,7 +32,7 @@ export default function RootLayout({
         <header></header>
         <FirebaseProvider>
           <ModalStateProvider>
-            <NavBar />
+            {/* <NavBar /> */}
             {children}
           </ModalStateProvider>
         </FirebaseProvider>

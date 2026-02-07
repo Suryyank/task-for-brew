@@ -4,6 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/db/firebaseContext";
+import { Heart } from "lucide-react";
+import { pacificoFont } from "../fonts/fonts";
+import CustomButton from "../components/atoms/CustomButton";
 
 export default function LoginPage() {
   const [form, setForm] = useState({
@@ -23,7 +26,7 @@ export default function LoginPage() {
       const result = await signInWithEmailAndPassword(
         auth,
         form.email,
-        form.password
+        form.password,
       );
 
       const idToken = await result.user.getIdToken();
@@ -54,17 +57,23 @@ export default function LoginPage() {
       />
       <div className="relative w-full max-w-md bg-white border border-gray-200 shadow-2xl backdrop-blur-3xl rounded-2xl p-8">
         {/* Accent */}
-        <div className="h-1 w-14 bg-[#db452b] rounded-full mb-6"></div>
-
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome back</h2>
-        <p className="text-sm text-gray-500 mb-6">
-          Log in to access your dashboard.
+        <div className="h-1 w-28 bg-linear-to-r from-pink-700 to-purple-400 rounded-full mb-6"></div>
+        <div className="flex items-center gap-4 mb-2 bg-amber-400/0">
+          <h2
+            className={`text-3xl font-bold text-gray-900 ${pacificoFont.className}`}
+          >
+            Welcome Back
+          </h2>
+          <Heart color="#ff3224" fill="#ff3224" className="-mt-0.5" />
+        </div>
+        <p className="text-sm text-gray-500 mb-5">
+          Sign in to access your dashboard.
         </p>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
               Email
             </label>
             <input
@@ -74,12 +83,11 @@ export default function LoginPage() {
               value={form.email}
               onChange={handleChange}
               placeholder="you@example.com"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-[#db452b] focus:border-[#db452b] outline-none"
+              className="w-full border border-gray-300 text-black rounded-lg px-3 py-2 focus:outline-black focus:outline-[1.5px]"
             />
           </div>
-
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
               Password
             </label>
             <input
@@ -89,16 +97,14 @@ export default function LoginPage() {
               value={form.password}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-[#db452b] focus:border-[#db452b] outline-none"
+              className="w-full border border-gray-300 text-black rounded-lg px-3 py-2 focus:outline-black focus:outline-[1.5px]"
             />
           </div>
-
-          <button
+          <CustomButton
             type="submit"
-            className="w-full py-2 rounded-xl font-semibold bg-[#db452b] text-white hover:bg-[#db452b]/80 transition-colors"
-          >
-            Log In
-          </button>
+            title={"Log in"}
+            className="w-full text-white font-semibold rounded-xl hover:opacity-90"
+          />
         </form>
 
         {/* Footer */}

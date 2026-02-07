@@ -14,7 +14,7 @@ const NavBar = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // RUN HOOKS FIRST
+  //
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setIsLoggedIn(!!user);
@@ -31,7 +31,7 @@ const NavBar = () => {
     router.push("/");
   }
 
-  // AFTER hooks run, do early return
+  //
   const forbidRoutes = [
     "/login",
     "/sign-up",
@@ -48,7 +48,7 @@ const NavBar = () => {
       {isLoggedIn ? (
         <CustomButton
           title="Logout"
-          className="rounded-4xl px-6 hover:scale-103 duration-150 text-sm"
+          className="text-white hover:bg-black/80  hover:scale-103 duration-180"
           onClick={handleLogout}
         />
       ) : (
@@ -70,8 +70,8 @@ const NavBar = () => {
 
   return (
     <>
-      {/* Small screen */}
-      <nav className="max-sm sm:hidden fixed top-4 left-4 right-4 z-50 border-black border-0">
+      {/* mobile */}
+      <nav className="max-sm sm:hidden fixed top-4 left-4 right-4 z-50 border-black border">
         <div className="flex justify-between items-center">
           <Image
             src={Logo}
@@ -88,7 +88,7 @@ const NavBar = () => {
       </nav>
 
       {/* Desktop */}
-      <nav className="fixed max-sm:hidden top-4 left-12 right-12 z-50 rounded-4xl bg-white backdrop-blur-sm shadow-md py-3 px-6">
+      <nav className="fixed max-sm:hidden top-4 left-12 right-12 z-50 rounded-4xl bg-white backdrop-blur-sm shadow-md py-3 px-6 border-2">
         <div className="flex justify-between items-center">
           <Image
             src={Logo}

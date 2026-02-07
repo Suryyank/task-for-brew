@@ -26,7 +26,7 @@ export default function SignUpPage() {
       const result = await createUserWithEmailAndPassword(
         auth,
         form.email,
-        form.password
+        form.password,
       );
 
       const user = result.user;
@@ -82,7 +82,7 @@ export default function SignUpPage() {
               value={form.email}
               onChange={handleChange}
               placeholder="you@example.com"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-[#db452b] focus:border-[#db452b] outline-none"
+              className="w-full border border-gray-300 text-black rounded-lg px-3 py-2 focus:outline-black focus:outline-[1.5px]"
             />
           </div>
 
@@ -97,7 +97,7 @@ export default function SignUpPage() {
               value={form.password}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-[#db452b] focus:border-[#db452b] outline-none"
+              className="w-full border border-gray-300 text-black rounded-lg px-3 py-2 focus:outline-black focus:outline-[1.5px]"
             />
           </div>
 

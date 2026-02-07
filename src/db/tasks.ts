@@ -12,7 +12,7 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore";
-import { NewTaskData, TaskDoc } from "@/app/components/organism/NewTask";
+import { NewTaskData, TaskDoc } from "@/types/NewTaskData";
 
 //create task
 export async function createTask(task: NewTaskData) {
